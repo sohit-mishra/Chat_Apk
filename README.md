@@ -136,10 +136,10 @@ npx expo start
 <img src="./assets/screenshots/chat.jpg" alt="Chat Screen" width="300" />
 
 ## All Contacts Screen
-<img src="./assets/screenshots/allcontact.jpg" alt="All Contacts Screen" width="300" />
+<img src="./assets/screenshots/allContact.jpg" alt="All Contacts Screen" width="300" />
 
 ## Conversation Screen
-<img src="./assets/screenshots/conversation.jpg" alt="Conversation Screen" width="300" />
+<img src="./assets/screenshots/Conversation.jpg" alt="Conversation Screen" width="300" />
 
 ## Forgot Password Screen
 <img src="./assets/screenshots/forgotpassword.jpg" alt="Forgot Password Screen" width="300" />
