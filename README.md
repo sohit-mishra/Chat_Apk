@@ -1,50 +1,156 @@
-# Welcome to your Expo app 👋
+# ChatApp Mobile Screens Overview
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This document describes the main screens in the ChatApp mobile application built with **Expo** and **React Native**.
 
-## Get started
+---
 
-1. Install dependencies
+## Screens
 
-   ```bash
-   npm install
-   ```
+### 1. **Login Screen**
+- **Path:** `login.tsx`
+- **Purpose:** Allows users to login using email/phone and password.
+- **Features:**
+  - Email/phone & password input
+  - Forgot password link
+  - Navigate to Signup screen
+  - AsyncStorage saves token on successful login
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+### 2. **Signup Screen**
+- **Path:** `signup.tsx`
+- **Purpose:** Register a new user account.
+- **Features:**
+  - Name, email, phone, password, confirm password fields
+  - Navigate to Login screen after successful signup
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 3. **Forgot Password Screen**
+- **Path:** `forgot-password.tsx`
+- **Purpose:** Initiate password reset.
+- **Features:**
+  - Enter registered email/phone
+  - Sends OTP or reset link
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+### 4. **Reset Password Screen**
+- **Path:** `reset-password/[token].tsx`
+- **Purpose:** Complete password reset after receiving reset link.
+- **Features:**
+  - New password and confirm password fields
+  - Submit button to reset password
 
-When you're ready, run:
+---
+
+### 5. **OTP Verification Screen**
+- **Path:** `otp.tsx`
+- **Purpose:** Verify OTP sent during signup or password reset.
+- **Features:**
+  - Input OTP code
+  - Submit to verify
+
+---
+
+### 6. **Home / Conversation List Screen**
+- **Path:** `index.tsx`
+- **Purpose:** Display all user conversations.
+- **Features:**
+  - List of conversations with last message
+  - Unread message indicator
+  - Navigate to chat screen
+  - Floating button to access all contacts
+
+---
+
+### 7. **Chat Screen**
+- **Path:** `chat/[recipientId].tsx`
+- **Purpose:** Real-time messaging with a selected user.
+- **Features:**
+  - Send/receive messages in real-time
+  - Typing indicators
+  - Read receipts
+  - Messages are loaded and ordered by timestamp
+
+---
+
+### 8. **Update Profile Screen**
+- **Path:** `updateprofile.tsx`
+- **Purpose:** Update user profile details and profile picture.
+- **Features:**
+  - Upload new profile photo
+  - Update name and phone number
+
+---
+
+### 9. **Contact / All Users Screen**
+- **Path:** `contact.tsx`
+- **Purpose:** Show all users to start new conversations.
+- **Features:**
+  - Navigate to chat screen for selected user
+
+---
+
+### 10. **Page Not Found Screen**
+- **Path:** `+not-found.tsx`
+- **Purpose:** Displayed when user navigates to an unknown route.
+- **Features:**
+  - Friendly message and back button
+
+---
+
+## Navigation Overview
+
+- **Stack Navigation:** Managed with `expo-router`  
+- **Header Features:**
+  - Profile Avatar → Opens profile options (update/logout)
+  - Logout button
+  - App logo on Home screen
+
+---
+
+## Notes
+
+- All authentication-related screens (login, signup, forgot/reset password, OTP) do not show the header for full-screen experience.
+- Chat and profile screens use a custom colored header.
+- Offline users are displayed without a green online indicator; online users are updated via Socket.io events.
+
+---
+
+## Run Command
 
 ```bash
-npm run reset-project
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+# ChatApp Screenshots
 
-## Learn more
+## Login Screen
+![Login Screen](./assets/screenshots/login.jpg)
 
-To learn more about developing your project with Expo, look at the following resources:
+## Signup Screen
+![Signup Screen](./assets/screenshots/signup.jpg)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Chat Screen
+![Chat Screen](./assets/screenshots/chat.jpg)
 
-## Join the community
+## All Contacts Screen
+![All Contacts Screen](./assets/screenshots/allcontact.jpg)
 
-Join our community of developers creating universal apps.
+## Conversation Screen
+![Conversation Screen](./assets/screenshots/conversation.jpg)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Forgot Password Screen
+![Forgot Password Screen](./assets/screenshots/forgotpassword.jpg)
+
+## Profile Update Screen
+![Profile Update Screen](./assets/screenshots/profileupdate.jpg)
+
+## Reset Password Screen
+![Reset Password Screen](./assets/screenshots/resetpassword.jpg)
+
+
+## Demo Video
+
+👉 [Watch Demo Video](./assets/screenshots/Video.mp4)

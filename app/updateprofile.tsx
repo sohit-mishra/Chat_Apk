@@ -13,7 +13,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosError } from "axios";
-import defaultProfile from "../assets/images/profile.png";
+
 
 
 export default function UpdateProfileScreen({ navigation }: any) {
@@ -93,7 +93,7 @@ const pickImage = async () => {
       type,
     } as unknown as Blob);
 
-    await axios.put(
+   const response = await axios.put(
       `${process.env.EXPO_PUBLIC_API_URL}/users/update/profile`,
       formData,
       {
@@ -103,7 +103,7 @@ const pickImage = async () => {
         },
       }
     );
-
+    await AsyncStorage.setItem("avatar", response.data.user.avatar);
     Alert.alert("Success", "Profile photo updated!");
   } catch (error) {
     const err = error as AxiosError;
@@ -172,7 +172,7 @@ const pickImage = async () => {
     >
       <View style={styles.card}>
         <View style={styles.avatarContainer}>
-          <Image source={avatar ? { uri: avatar } : defaultProfile} style={styles.avatar} />
+          <Image source={avatar ? { uri: avatar } : require("../assets/images/profile.png")} style={styles.avatar} />
           <TouchableOpacity style={styles.changePhotoBtn} onPress={pickImage}>
             <Text style={styles.changePhotoText}>Change Photo</Text>
           </TouchableOpacity>

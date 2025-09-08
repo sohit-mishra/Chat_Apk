@@ -146,6 +146,21 @@ export default function RootLayout() {
           },
         }}
       />
+
+      <Stack.Screen
+        name="contact"
+        options={{
+          title: "All Contact",
+          headerStyle: { backgroundColor: "#292929ff" },
+          headerTitleStyle: {
+            fontSize: 22,
+            fontWeight: "bold",
+            color: "#fff",
+          },
+        }}
+      />
+
+
       <Stack.Screen
         name="reset-password/[token]"
         options={{ headerShown: false }}

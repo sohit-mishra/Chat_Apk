@@ -1,4 +1,4 @@
-import { Link, router } from "expo-router";
+import { Link, router, useFocusEffect } from "expo-router";
 import {
   View,
   Text,
@@ -7,12 +7,14 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { format, isToday, isYesterday } from "date-fns";
+import Entypo from "@expo/vector-icons/Entypo";
 
 interface User {
+  conversationId: string;
   _id: string;
   name: string;
   avatar?: string;
@@ -24,30 +26,34 @@ interface User {
 export default function HomeScreen() {
   const [users, setUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const token = await AsyncStorage.getItem("token");
+  const fetchUsers = async () => {
+    const token = await AsyncStorage.getItem("token");
 
-      if (!token) {
-        router.replace("/login");
-        return;
-      }
+    if (!token) {
+      router.replace("/login");
+      return;
+    }
 
-      try {
-        const response = await axios.get(
-          `${process.env.EXPO_PUBLIC_API_URL}/users`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setUsers(response.data);
-      } catch (err) {
-        console.error("Failed to fetch users", err);
-        router.replace("/login");
-      }
-    };
-    fetchUsers();
-  }, []);
+    try {
+      const response = await axios.get(
+        `${process.env.EXPO_PUBLIC_API_URL}/conversations`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setUsers(response.data);
+    } catch (err) {
+      console.error("Failed to fetch users", err);
+      router.replace("/login");
+    }
+  };
+
+  // 👇 This will refetch every time the screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      fetchUsers();
+    }, [])
+  );
 
   function formatChatTimestamp(timestamp?: string | number | Date): string {
     if (!timestamp) return "";
@@ -93,7 +99,7 @@ export default function HomeScreen() {
             <Text style={styles.lastMessage} numberOfLines={1}>
               {item.lastMessage}
             </Text>
-            {item.unreadCount && item.unreadCount > 0 ? (
+            {item.unreadCount ? (
               <View style={styles.unreadBadge}>
                 <Text style={styles.unreadText}>{item.unreadCount}</Text>
               </View>
@@ -106,15 +112,28 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={users}
-        keyExtractor={(item) => item._id}
-        renderItem={renderItem}
-        contentContainerStyle={styles.listContainer}
-        showsVerticalScrollIndicator={false}
-        overScrollMode="never"
-        keyboardShouldPersistTaps="handled"
-      />
+      {users.length === 0 ? (
+        <View style={styles.noUsersContainer}>
+          <Text style={styles.noUsersText}>No Contacts</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={users}
+          keyExtractor={(item) => item._id}
+          renderItem={renderItem}
+          contentContainerStyle={styles.listContainer}
+          showsVerticalScrollIndicator={false}
+          overScrollMode="never"
+          keyboardShouldPersistTaps="handled"
+        />
+      )}
+
+      <TouchableOpacity
+        style={styles.floatingButton}
+        onPress={() => router.push("/contact")}
+      >
+        <Entypo name="chat" size={28} color="#fff" />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -128,7 +147,7 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: 0,
     paddingTop: 10,
-    paddingBottom: 20, // spacing so last item isn't cut off
+    paddingBottom: 20,
   },
   userItem: {
     flexDirection: "row",
@@ -198,5 +217,30 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
     fontWeight: "bold",
+  },
+  noUsersContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noUsersText: {
+    color: "#aaa",
+    fontSize: 18,
+  },
+  floatingButton: {
+    position: "absolute",
+    bottom: 100,
+    right: 40,
+    backgroundColor: "#18b969ff",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
