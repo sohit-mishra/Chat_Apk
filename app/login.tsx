@@ -11,10 +11,11 @@ import {
 import { Link, router } from "expo-router";
 import axios, { AxiosError } from "axios";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState("anticpiece78@gmail.com");
-  const [password, setPassword] = useState("12345678");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +36,9 @@ export default function LoginScreen() {
       );
 
       if (response.status === 200) {
+        const token = response.data.token;
+        await AsyncStorage.setItem("token", token);
+        await AsyncStorage.setItem("avatar", response.data.user.avatar);
         router.replace("/");
       } else {
         setError("Invalid response from server");
@@ -91,7 +95,10 @@ export default function LoginScreen() {
       </View>
 
       <TouchableOpacity
-        style={[styles.button, (loading || !email || !password) && { opacity: 0.7 }]}
+        style={[
+          styles.button,
+          (loading || !email || !password) && { opacity: 0.7 },
+        ]}
         onPress={handleLogin}
         disabled={loading || !email || !password}
       >
