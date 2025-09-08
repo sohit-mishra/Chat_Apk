@@ -127,29 +127,28 @@ npx expo start
 # ChatApp Screenshots
 
 ## Login Screen
-![Login Screen](./assets/screenshots/login.jpg)
+<img src="./assets/screenshots/login.jpg" alt="Login Screen" width="300" />
 
 ## Signup Screen
-![Signup Screen](./assets/screenshots/signup.jpg)
+<img src="./assets/screenshots/signup.jpg" alt="Signup Screen" width="300" />
 
 ## Chat Screen
-![Chat Screen](./assets/screenshots/chat.jpg)
+<img src="./assets/screenshots/chat.jpg" alt="Chat Screen" width="300" />
 
 ## All Contacts Screen
-![All Contacts Screen](./assets/screenshots/allcontact.jpg)
+<img src="./assets/screenshots/allcontact.jpg" alt="All Contacts Screen" width="300" />
 
 ## Conversation Screen
-![Conversation Screen](./assets/screenshots/conversation.jpg)
+<img src="./assets/screenshots/conversation.jpg" alt="Conversation Screen" width="300" />
 
 ## Forgot Password Screen
-![Forgot Password Screen](./assets/screenshots/forgotpassword.jpg)
+<img src="./assets/screenshots/forgotpassword.jpg" alt="Forgot Password Screen" width="300" />
 
 ## Profile Update Screen
-![Profile Update Screen](./assets/screenshots/profileupdate.jpg)
+<img src="./assets/screenshots/profileupdate.jpg" alt="Profile Update Screen" width="300" />
 
 ## Reset Password Screen
-![Reset Password Screen](./assets/screenshots/resetpassword.jpg)
-
+<img src="./assets/screenshots/resetpassword.jpg" alt="Reset Password Screen" width="300" />
 
 ## Demo Video
 
